@@ -1,169 +1,110 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:fisi_army/others/ProfileListItem_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 
-import '../constants.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    ScreenUtil.init(context, height: 896, width: 414, allowFontScaling: true);
+  _HomePageState createState() => _HomePageState();
+}
 
-    var profileInfo = Expanded(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: kSpacingUnit.w * 10,
-            width: kSpacingUnit.w * 10,
-            margin: EdgeInsets.only(top: kSpacingUnit.w * 3),
-            child: Stack(
-              children: <Widget>[
-                CircleAvatar(
-                  radius: kSpacingUnit.w * 5,
-                  backgroundImage: AssetImage('assets/images/avatar.png'),
+class _HomePageState extends State<HomePage> {
+
+@override
+  Widget build(BuildContext context) {
+  return MaterialApp(
+      title: 'Welcome to Flutter',
+      //theme: ThemeData(primaryColor: Color.fromRGBO(20, 94, 179, 100)),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/logounmsm.png',
+            height: 45.0,
+          ),
+          actions: <Widget>[
+            InkWell(
+                onTap: () {
+                  print("Me tocaste, denunciado");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(Icons.exit_to_app),
+                ))
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(120.0),
+                child: Image.asset(
+                  'assets/logounmsm.png',
+                  height: 100,
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    height: kSpacingUnit.w * 2.5,
-                    width: kSpacingUnit.w * 2.5,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      heightFactor: kSpacingUnit.w * 1.5,
-                      widthFactor: kSpacingUnit.w * 1.5,
-                      child: Icon(
-                        LineAwesomeIcons.pen,
-                        color: kDarkPrimaryColor,
-                        size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: kSpacingUnit.w * 2),
-          Text(
-            'Nicolas Adams',
-            style: kTitleTextStyle,
-          ),
-          SizedBox(height: kSpacingUnit.w * 0.5),
-          Text(
-            'nicolasadams@gmail.com',
-            style: kCaptionTextStyle,
-          ),
-          SizedBox(height: kSpacingUnit.w * 2),
-          Container(
-            height: kSpacingUnit.w * 4,
-            width: kSpacingUnit.w * 20,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(kSpacingUnit.w * 3),
-              color: Theme.of(context).accentColor,
-            ),
-            child: Center(
-              child: Text(
-                'Upgrade to PRO',
-                style: kButtonTextStyle,
               ),
             ),
-          ),
-        ],
-      ),
-    );
-
-    var themeSwitcher = ThemeSwitcher(
-      builder: (context) {
-        return AnimatedCrossFade(
-          duration: Duration(milliseconds: 200),
-          crossFadeState:
-              ThemeProvider.of(context).brightness == Brightness.dark
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-          firstChild: GestureDetector(
-            onTap: () =>
-                ThemeSwitcher.of(context).changeTheme(theme: kLightTheme),
-            child: Icon(
-              LineAwesomeIcons.sun,
-              size: ScreenUtil().setSp(kSpacingUnit.w * 3),
+            Container(
+              child: Text("Hola ctm, soy tu usuario"),
+              height: 40,
             ),
-          ),
-          secondChild: GestureDetector(
-            onTap: () =>
-                ThemeSwitcher.of(context).changeTheme(theme: kDarkTheme),
-            child: Icon(
-              LineAwesomeIcons.moon,
-              size: ScreenUtil().setSp(kSpacingUnit.w * 3),
-            ),
-          ),
-        );
-      },
-    );
-
-    var header = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(width: kSpacingUnit.w * 3),
-        Icon(
-          LineAwesomeIcons.arrow_left,
-          size: ScreenUtil().setSp(kSpacingUnit.w * 3),
-        ),
-        profileInfo,
-        themeSwitcher,
-        SizedBox(width: kSpacingUnit.w * 3),
-      ],
-    );
-
-    return ThemeSwitchingArea(
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            body: Column(
-              children: <Widget>[
-                SizedBox(height: kSpacingUnit.w * 5),
-                header,
-                Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.user_shield,
-                        text: 'Privacy',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.history,
-                        text: 'Purchase History',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.question_circle,
-                        text: 'Help & Support',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.cog,
-                        text: 'Settings',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.user_plus,
-                        text: 'Invite a Friend',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.alternate_sign_out,
-                        text: 'Logout',
-                        hasNavigation: false,
-                      ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Icon(Icons.person_pin),
+                      Text('Perfil'),
                     ],
                   ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/add');
+                    },
+                    child: Column(
+                      children: [
+                        Icon(Icons.payment),
+                        Text('Pago'),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Icon(Icons.settings),
+                      Text('Ajustes'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Row(children: <Widget>[
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.blueAccent[100]),
+                  //width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  child: Text(
+                    'Programas cursados',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ]),
+            /*Row(
+              children: <Widget>[
+                Container(
+                  child: Text('Programas cursados'),
                 )
               ],
-            ),
-          );
-        },
+            )*/
+          ],
+        ),
       ),
     );
   }
+
 }
+
