@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              child: Text("Hola ctm, soy tu usuario"),
+              child: Text("Hola Jorge, soy tu usuario"),
               height: 40,
             ),
             Container(

@@ -43,7 +43,7 @@ class _DetailPageState extends State<DetailPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('xd'),
+        title: Text('DETALLE DE PAGOS'),
         backgroundColor: Colors.indigo[900],
       ),
       body: ListView.builder(
