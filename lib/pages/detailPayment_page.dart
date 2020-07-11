@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
+//import 'dart:async';
 import 'dart:convert';
 
 class DetailPage extends StatefulWidget{
-
-
   @override
   _DetailPageState createState() => _DetailPageState();
-
-
 }
 
 class _DetailPageState extends State<DetailPage>{
@@ -28,15 +24,20 @@ class _DetailPageState extends State<DetailPage>{
     //debugPrint(response.body);
     data = json.decode(response.body);
     //debugPrint("${data[0]}");
-    setState(() {
+    //setState(() {
       usersData = data;
-    });
+    //});
   }
 
   @override
   void initState() { 
     super.initState();
     getUsers();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

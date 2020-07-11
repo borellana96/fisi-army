@@ -1,20 +1,38 @@
+import 'package:fisi_army/pages/detailPayment_page.dart';
+import 'package:fisi_army/pages/tabs/ajustes.dart';
+import 'package:fisi_army/pages/tabs/perfil.dart';
+import 'package:fisi_army/states/login_state.dart';
+//import 'package:fisi_army/pages/tabs/programas.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  TabController _controller;
 
-@override
+  //final List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-  return MaterialApp(
+    return MaterialApp(
       title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
-      //theme: ThemeData(primaryColor: Color.fromRGBO(20, 94, 179, 100)),
       home: Scaffold(
         appBar: AppBar(
           title: Image.asset(
@@ -24,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             InkWell(
                 onTap: () {
-                  print("Me tocaste, denunciado");
+                  Provider.of<LoginState>(context).logout();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -32,6 +50,7 @@ class _HomePageState extends State<HomePage> {
                 ))
           ],
           backgroundColor: Colors.indigo[900],
+          //bottom: getTabBar(),
         ),
         body: Column(
           children: <Widget>[
@@ -51,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               padding: EdgeInsets.all(15),
-              child: Row(
+              child: getTabBar()/*Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Column(
@@ -78,11 +97,11 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ],
-              ),
+              )*/,
             ),
-            Row(children: <Widget>[
+            //Row(children: <Widget>[
               Expanded(
-                child: Container(
+                child: getTabBarView()/*Container(
                   decoration: BoxDecoration(color: Colors.indigo[900]),
                   //width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -92,9 +111,9 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                ),
+                )*/,
               ),
-            ]),
+            //]),
             /*Row(
               children: <Widget>[
                 Container(
@@ -108,5 +127,27 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-}
+  TabBar getTabBar() {
+    return TabBar(
+      tabs: <Tab>[
+        Tab(icon: Icon(Icons.person_pin)),
+        Tab(icon: Icon(Icons.payment)),
+        Tab(icon: Icon(Icons.settings)),
+      ],
+      controller: _controller,
+      labelColor: Colors.black,
+      unselectedLabelColor: Colors.black54,
+    );
+  }
 
+  TabBarView getTabBarView() {
+    return TabBarView(
+      controller: _controller,
+      children: <Widget>[
+        PerfilWidget(),
+        DetailPage(),
+        AjustesWidget()
+      ],
+    );
+  }
+}

@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: Text(
-            '- OR -',
+            '- O -',
             style: TextStyle(
               fontWeight: FontWeight.w400,
             ),
@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Iniciar Sesion",
+                      "Iniciar Sesión",
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 30,
                       ),
@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                 _buildPasswordRow(),
                 _buildLoginButton(),
                 _buildForgetPasswordButton(),
-                SizedBox(height: 30),
+                //SizedBox(height: 30),
                 _buildOrRow(),
                 _buildSocialBtnRow(),
               ],
