@@ -18,6 +18,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //editar modal
+  createAlertDialogOlvidePassword(BuildContext context) {
+    TextEditingController usuarioControler = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Ingrese su usuario"),
+            content: TextField(
+              controller: usuarioControler,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text("Recuperar"),
+                onPressed: () {
+                  //Se ejecurta cuando hace click el recuperar
+
+                  //1 - llamar los campos
+
+                  //2- juntar en la api
+                  //3- hacer peticion
+                  //4- si devilve 200 ok! restablecio a dni
+                  //5-si hay error avisar
+                },
+              )
+            ],
+          );
+        });
+  }
+
   String email, password;
   Widget _buildLogo() {
     return Row(
@@ -86,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         FlatButton(
-          onPressed: () {},
+          onPressed: () {
+            //lamar modal recuperar contraseña
+          },
           child: Text("Recuperar Contraseña"),
         ),
       ],
