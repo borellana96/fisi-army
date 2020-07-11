@@ -41,13 +41,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
           actions: <Widget>[
             InkWell(
-                onTap: () {
-                  Provider.of<LoginState>(context).logout();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Icon(Icons.exit_to_app),
-                ))
+              onTap: () {
+                Provider.of<LoginState>(context).logout();   
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Icon(Icons.exit_to_app),
+              )
+            )
           ],
           backgroundColor: Colors.indigo[900],
           //bottom: getTabBar(),
