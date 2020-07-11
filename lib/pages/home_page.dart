@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
                   child: Icon(Icons.exit_to_app),
                 ))
           ],
+          backgroundColor: Colors.indigo[900],
         ),
         body: Column(
           children: <Widget>[
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             Row(children: <Widget>[
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(color: Colors.blueAccent[100]),
+                  decoration: BoxDecoration(color: Colors.indigo[900]),
                   //width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                   child: Text(
