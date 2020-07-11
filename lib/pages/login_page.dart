@@ -1,15 +1,23 @@
+import 'package:fisi_army/main.dart';
 import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-const mainColor =  Color ( 0xff2470c7 );
+import 'package:http/http.dart' as http;
+import 'package:fisi_army/pages/home_page.dart';
+
+import 'dart:async';
+import 'dart:convert';
+import 'package:fisi_army/states/login_state.dart';
+
+const mainColor = Color(0xff2470c7);
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
   String email, password;
   Widget _buildLogo() {
     return Row(
@@ -45,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               Icons.email,
               color: mainColor,
             ),
-            labelText: 'E-mail'),
+            labelText: 'Username'),
       ),
     );
   }
@@ -79,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         FlatButton(
           onPressed: () {},
-          child: Text("Forgot Password"),
+          child: Text("Recuperar Contraseña"),
         ),
       ],
     );
@@ -99,7 +107,33 @@ class _LoginPageState extends State<LoginPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
             ),
-            onPressed: () {},
+            onPressed: () async {
+              var url =
+                  "https://sigapdev2-consultarecibos-back.herokuapp.com/usuario/alumnoprograma/buscar/" +
+                      password +
+                      "/" +
+                      email;
+              url = url.trim();
+              debugPrint(url);
+
+              var response = await http.get(url);
+              if (response.statusCode == 200) {
+                debugPrint("Existe");
+                var state = Provider.of<LoginState>(context);
+
+                state.username = email;
+                state.password = password;
+                state.setLoggedIn(true);
+                state.perfil = json.decode(response.body);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              } else {
+                debugPrint("NO EXISTE O ERROR EN REQUEST");
+                //ocurrio un error o datos invalidos
+              }
+            },
             child: Text(
               "Login",
               style: TextStyle(
@@ -114,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildOrRow() {
+  /*Widget _buildOrRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -129,41 +163,39 @@ class _LoginPageState extends State<LoginPage> {
         )
       ],
     );
-  }
+  }*/
 
-  Widget _buildSocialBtnRow() {
+  /*Widget _buildSocialBtnRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         GestureDetector(
-          onTap: () {},
-          child:Consumer<LoginState>(
-           builder: (BuildContext context , LoginState value , Widget child){
-             if(value.isLoading()){
-               return CircularProgressIndicator();
-             }else {
-               return child;
-             }
-           },
-           child: RaisedButton.icon(
-             icon: Icon(
-              FontAwesomeIcons.google,
-              color: Colors.white,
-            ),
-             onPressed: (){
-               Provider.of<LoginState>(context).login();
-             },
-            splashColor: Colors.amber,
-            color: Colors.redAccent, 
-            label: Text('GOOGLE'),
-              
-           ),
-         )
-        )
+            onTap: () {},
+            child: Consumer<LoginState>(
+              builder: (BuildContext context, LoginState value, Widget child) {
+                if (value.isLoading()) {
+                  return CircularProgressIndicator();
+                } else {
+                  return child;
+                }
+              },
+              child: RaisedButton.icon(
+                icon: Icon(
+                  FontAwesomeIcons.google,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Provider.of<LoginState>(context).login();
+                },
+                splashColor: Colors.amber,
+                color: Colors.redAccent,
+                label: Text('GOOGLE'),
+              ),
+            ))
       ],
     );
   }
-
+*/
   Widget _buildContainer() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -186,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Login",
+                      "Iniciar sesion",
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 30,
                       ),
@@ -197,8 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                 _buildPasswordRow(),
                 _buildForgetPasswordButton(),
                 _buildLoginButton(),
-                _buildOrRow(),
-                _buildSocialBtnRow(),
+                //_buildOrRow(),
+                //_buildSocialBtnRow(),
               ],
             ),
           ),
@@ -275,9 +307,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
 }
-
 
 //Center(
 //     child: Consumer<LoginState>(

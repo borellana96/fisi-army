@@ -1,6 +1,10 @@
+import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-
+import 'dart:async';
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,10 +12,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var perfil;
+  var programas;
 
-@override
+  createAlertDialog(BuildContext context) {
+    TextEditingController customControler = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Ingrese su codigo"),
+            content: TextField(
+              controller: customControler,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text("Buscar"),
+                onPressed: () {},
+              )
+            ],
+          );
+        });
+  }
+
+  traerData(String url) async {
+    return await http.get(url);
+  }
+
+  @override
   Widget build(BuildContext context) {
-  return MaterialApp(
+    var state = Provider.of<LoginState>(context);
+    var ga = json.encode(state.perfil);
+    var perfil = json.decode(ga);
+    //traer datos del usuario
+    var urlProgramas =
+        "https://sigapdev2-consultarecibos-back.herokuapp.com/recaudaciones/alumno/concepto/listar_codigoslog/" +
+            perfil['apePaterno'].toString() +
+            "/" +
+            perfil['codAlumno'].toString();
+    urlProgramas = urlProgramas.trim();
+    debugPrint("gaaa");
+    debugPrint(urlProgramas);
+    var res = traerData(urlProgramas);
+    /*await http.get(urlProgramas).then((value) =>
+        {res = json.decode(value.body), debugPrint(res[0]['cod_alumno'])});*/
+    //var resp = traerData(urlProgramas);
+    setState(() {
+      programas = res;
+    });
+    debugPrint("owo");
+    //debugPrint(programas[0]['cod_alumno']);
+    return MaterialApp(
       title: 'Welcome to Flutter',
       //theme: ThemeData(primaryColor: Color.fromRGBO(20, 94, 179, 100)),
       home: Scaffold(
@@ -65,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Icon(Icons.payment),
-                        Text('Pago'),
+                        Text('Pagos'),
                       ],
                     ),
                   ),
@@ -93,18 +145,30 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ]),
-            /*Row(
-              children: <Widget>[
-                Container(
-                  child: Text('Programas cursados'),
-                )
-              ],
+            /*Container(
+              child: ListView.builder(
+                itemCount: programas == null ? 0 : programas.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "${programas[index]['cod_alumno']}",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  );
+                },
+              ),
             )*/
           ],
         ),
       ),
     );
   }
-
 }
-
