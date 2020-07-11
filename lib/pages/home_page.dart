@@ -13,6 +13,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
   return MaterialApp(
       title: 'Welcome to Flutter',
+      debugShowCheckedModeBanner: false,
       //theme: ThemeData(primaryColor: Color.fromRGBO(20, 94, 179, 100)),
       home: Scaffold(
         appBar: AppBar(

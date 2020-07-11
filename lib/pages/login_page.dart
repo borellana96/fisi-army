@@ -2,14 +2,14 @@ import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-const mainColor =  Color ( 0xff2470c7 );
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
+  Color mainColor =  Colors.indigo[900];
   String email, password;
   Widget _buildLogo() {
     return Row(
@@ -42,10 +42,10 @@ class _LoginPageState extends State<LoginPage> {
         },
         decoration: InputDecoration(
             prefixIcon: Icon(
-              Icons.email,
+              Icons.person,
               color: mainColor,
             ),
-            labelText: 'E-mail'),
+            labelText: 'Usuario'),
       ),
     );
   }
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             Icons.lock,
             color: mainColor,
           ),
-          labelText: 'Password',
+          labelText: 'Contraseña',
         ),
       ),
     );
@@ -74,12 +74,15 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildForgetPasswordButton() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         FlatButton(
           onPressed: () {},
-          child: Text("Forgot Password"),
+          child: Text("Cambiar contraseña",
+          style: TextStyle(
+            decoration: TextDecoration.underline,
+          ),),
         ),
       ],
     );
@@ -92,16 +95,16 @@ class _LoginPageState extends State<LoginPage> {
         Container(
           height: 1.4 * (MediaQuery.of(context).size.height / 20),
           width: 5 * (MediaQuery.of(context).size.width / 10),
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.all(2.0),
           child: RaisedButton(
             elevation: 5.0,
             color: mainColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(20.0),
             ),
             onPressed: () {},
             child: Text(
-              "Login",
+              "Ingresar",
               style: TextStyle(
                 color: Colors.white,
                 letterSpacing: 1.5,
@@ -186,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Login",
+                      "Iniciar Sesion",
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 30,
                       ),
@@ -195,8 +198,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 _buildEmailRow(),
                 _buildPasswordRow(),
-                _buildForgetPasswordButton(),
                 _buildLoginButton(),
+                _buildForgetPasswordButton(),
+                SizedBox(height: 30),
                 _buildOrRow(),
                 _buildSocialBtnRow(),
               ],
