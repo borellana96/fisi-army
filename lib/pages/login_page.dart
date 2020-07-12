@@ -1,7 +1,17 @@
+import 'package:fisi_army/main.dart';
 import 'package:fisi_army/states/login_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:fisi_army/pages/home_page.dart';
+
+import 'dart:async';
+import 'dart:convert';
+import 'package:fisi_army/states/login_state.dart';
+
+const mainColor = Color(0xff2470c7);
 
 class LoginPage extends StatefulWidget {
   @override
@@ -102,7 +112,35 @@ class _LoginPageState extends State<LoginPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            onPressed: () {},
+            onPressed: () async {
+              var url =
+                  "https://sigapdev2-consultarecibos-back.herokuapp.com/usuario/alumnoprograma/buscar/" +
+                      password +
+                      "/" +
+                      email;
+              url = url.trim();
+              debugPrint(url);
+
+              var response = await http.get(url);
+              if (response.statusCode == 200) {
+                debugPrint("Existe");
+                var state = Provider.of<LoginState>(context);
+
+                state.username = email;
+                state.password = password;
+                state.setLoggedIn(true);
+                state.perfil = json.decode(response.body);
+                print(response.body);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              } else {
+                showAlertDialog(context);
+                debugPrint("NO EXISTE O ERROR EN REQUEST");
+                //ocurrio un error o datos invalidos
+              }
+            },
             child: Text(
               "Ingresar",
               style: TextStyle(
@@ -139,30 +177,28 @@ class _LoginPageState extends State<LoginPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         GestureDetector(
-          onTap: () {},
-          child:Consumer<LoginState>(
-           builder: (BuildContext context , LoginState value , Widget child){
-             if(value.isLoading()){
-               return CircularProgressIndicator();
-             }else {
-               return child;
-             }
-           },
-           child: RaisedButton.icon(
-             icon: Icon(
-              FontAwesomeIcons.google,
-              color: Colors.white,
-            ),
-             onPressed: (){
-               Provider.of<LoginState>(context).login();
-             },
-            splashColor: Colors.amber,
-            color: Colors.redAccent, 
-            label: Text('GOOGLE'),
-              
-           ),
-         )
-        )
+            onTap: () {},
+            child: Consumer<LoginState>(
+              builder: (BuildContext context, LoginState value, Widget child) {
+                if (value.isLoading()) {
+                  return CircularProgressIndicator();
+                } else {
+                  return child;
+                }
+              },
+              child: RaisedButton.icon(
+                icon: Icon(
+                  FontAwesomeIcons.google,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Provider.of<LoginState>(context).login();
+                },
+                splashColor: Colors.amber,
+                color: Colors.redAccent,
+                label: Text('GOOGLE'),
+              ),
+            ))
       ],
     );
   }
@@ -210,6 +246,34 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
+
+  showAlertDialog(BuildContext context) {
+
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("aceptar",style: TextStyle(fontSize: 15.0),),
+    onPressed: () => Navigator.pop(context),
+    color: Colors.redAccent,
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("¿Error de Inicar Sesiòn?"),
+    content: Text("Usuario o Contraseña Incorrecta"),
+    actions: [
+      okButton,
+    ],
+    elevation: 24.0,
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
   //Widget _buildSignUpBtn() {
   //  return Row(
@@ -279,9 +343,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
 }
-
 
 //Center(
 //     child: Consumer<LoginState>(

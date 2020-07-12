@@ -4,6 +4,8 @@ import 'package:fisi_army/pages/login_page.dart';
 import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'pages/login_page.dart';
 //import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
@@ -29,7 +31,8 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             }
           },
-          '/add': (BuildContext context) => DetailPage()
+          '/add': (BuildContext context) => DetailPage(),
+          '/login': (BuildContext context) => LoginPage()
         },
       ),
     );

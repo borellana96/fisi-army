@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: Column(
                       children: [
                         Icon(Icons.payment),
-                        Text('Pago'),
+                        Text('Pagos'),
                       ],
                     ),
                   ),
