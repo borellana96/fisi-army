@@ -1,5 +1,6 @@
 import 'package:fisi_army/main.dart';
 import 'package:fisi_army/states/login_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -18,37 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //editar modal
-  createAlertDialogOlvidePassword(BuildContext context) {
-    TextEditingController usuarioControler = TextEditingController();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Ingrese su usuario"),
-            content: TextField(
-              controller: usuarioControler,
-            ),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                child: Text("Recuperar"),
-                onPressed: () {
-                  //Se ejecurta cuando hace click el recuperar
-
-                  //1 - llamar los campos
-
-                  //2- juntar en la api
-                  //3- hacer peticion
-                  //4- si devilve 200 ok! restablecio a dni
-                  //5-si hay error avisar
-                },
-              )
-            ],
-          );
-        });
-  }
-
+  Color mainColor =  Colors.indigo[900];
   String email, password;
   Widget _buildLogo() {
     return Row(
@@ -81,10 +52,10 @@ class _LoginPageState extends State<LoginPage> {
         },
         decoration: InputDecoration(
             prefixIcon: Icon(
-              Icons.email,
+              Icons.person,
               color: mainColor,
             ),
-            labelText: 'Username'),
+            labelText: 'Usuario'),
       ),
     );
   }
@@ -105,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
             Icons.lock,
             color: mainColor,
           ),
-          labelText: 'Password',
+          labelText: 'Contraseña',
         ),
       ),
     );
@@ -113,14 +84,15 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildForgetPasswordButton() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         FlatButton(
-          onPressed: () {
-            //lamar modal recuperar contraseña
-          },
-          child: Text("Recuperar Contraseña"),
+          onPressed: () {},
+          child: Text("Cambiar contraseña",
+          style: TextStyle(
+            decoration: TextDecoration.underline,
+          ),),
         ),
       ],
     );
@@ -133,12 +105,12 @@ class _LoginPageState extends State<LoginPage> {
         Container(
           height: 1.4 * (MediaQuery.of(context).size.height / 20),
           width: 5 * (MediaQuery.of(context).size.width / 10),
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.all(2.0),
           child: RaisedButton(
             elevation: 5.0,
             color: mainColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(20.0),
             ),
             onPressed: () async {
               var url =
@@ -158,17 +130,19 @@ class _LoginPageState extends State<LoginPage> {
                 state.password = password;
                 state.setLoggedIn(true);
                 state.perfil = json.decode(response.body);
+                print(response.body);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),
                 );
               } else {
+                showAlertDialog(context);
                 debugPrint("NO EXISTE O ERROR EN REQUEST");
                 //ocurrio un error o datos invalidos
               }
             },
             child: Text(
-              "Login",
+              "Ingresar",
               style: TextStyle(
                 color: Colors.white,
                 letterSpacing: 1.5,
@@ -181,14 +155,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  /*Widget _buildOrRow() {
+  Widget _buildOrRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: Text(
-            '- OR -',
+            '- O -',
             style: TextStyle(
               fontWeight: FontWeight.w400,
             ),
@@ -196,9 +170,9 @@ class _LoginPageState extends State<LoginPage> {
         )
       ],
     );
-  }*/
+  }
 
-  /*Widget _buildSocialBtnRow() {
+  Widget _buildSocialBtnRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -228,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-*/
+
   Widget _buildContainer() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Iniciar sesion",
+                      "Iniciar Sesión",
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 30,
                       ),
@@ -260,10 +234,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 _buildEmailRow(),
                 _buildPasswordRow(),
-                _buildForgetPasswordButton(),
                 _buildLoginButton(),
-                //_buildOrRow(),
-                //_buildSocialBtnRow(),
+                _buildForgetPasswordButton(),
+                //SizedBox(height: 30),
+                _buildOrRow(),
+                _buildSocialBtnRow(),
               ],
             ),
           ),
@@ -271,6 +246,34 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
+
+  showAlertDialog(BuildContext context) {
+
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("aceptar",style: TextStyle(fontSize: 15.0),),
+    onPressed: () => Navigator.pop(context),
+    color: Colors.redAccent,
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("¿Error de Inicar Sesiòn?"),
+    content: Text("Usuario o Contraseña Incorrecta"),
+    actions: [
+      okButton,
+    ],
+    elevation: 24.0,
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
   //Widget _buildSignUpBtn() {
   //  return Row(

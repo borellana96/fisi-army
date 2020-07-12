@@ -5,6 +5,9 @@ import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/login_page.dart';
+//import 'package:flutter/services.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<LoginState>(
       builder: (BuildContext context) => LoginState(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -27,7 +31,8 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             }
           },
-          '/add': (BuildContext context) => DetailPage()
+          '/add': (BuildContext context) => DetailPage(),
+          '/login': (BuildContext context) => LoginPage()
         },
       ),
     );
