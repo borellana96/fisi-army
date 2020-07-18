@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+
+  final  Map<String, dynamic>  usuario;
+
+  const HomePage({Key key, this.usuario}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -31,6 +36,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    print(widget.usuario);
     return MaterialApp(
       title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
@@ -106,13 +112,18 @@ class _HomePageState extends State<HomePage>
           child: ClipRRect(
             borderRadius: BorderRadius.circular(120.0),
             child: Image.asset(
-              'assets/logounmsm.png',
+              'assets/usuario.png',
               height: 100,
             ),
           ),
         ),
         Container(
-          child: Text("Hola Jorge, soy tu usuario"),
+          child: Text("HOLA "+ widget.usuario['nomAlumno'],
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20.0
+            )
+          ),
           height: 40,
         )
       ],
@@ -135,7 +146,7 @@ class _HomePageState extends State<HomePage>
   TabBarView getTabBarView() {
     return TabBarView(
       controller: _controller,
-      children: <Widget>[PerfilWidget(), DetailPage(), AjustesWidget()],
+      children: <Widget>[PerfilWidget(usuario: widget.usuario), DetailPage(), AjustesWidget()],
     );
   }
 }

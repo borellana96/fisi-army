@@ -155,9 +155,11 @@ class _LoginPageState extends State<LoginPage> {
                 state.setLoggedIn(true);
                 state.perfil = json.decode(response.body);
                 print(response.body);
+                Map<String, dynamic> usuario = json.decode(response.body);
+                print(usuario['userName']);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (context) => HomePage(usuario: usuario)),
                 );
               } else {
                 showAlertDialog(context);
