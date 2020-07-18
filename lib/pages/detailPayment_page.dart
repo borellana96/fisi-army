@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-//import 'dart:async';
 import 'dart:convert';
 
-class DetailPage extends StatefulWidget{
+class DetailPage extends StatefulWidget {
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -11,22 +10,14 @@ class DetailPage extends StatefulWidget{
 class _DetailPageState extends State<DetailPage> {
   List data;
   List usersData;
-  //getUsers()async{
-  //  http.Response response = await http.get('http://192.168.1.10:3000/api/users');
-  //  data = json.decode(response.body);
-  //  setState(() {
-  //    usersData = data[];
-  //  });
-  //}
+
   getUsers() async {
     http.Response response = await http.get(
-        'https://sigapdev2-consultarecibos-back.herokuapp.com/recaudaciones/alumno/concepto/listar_cod/18207001');
-    //debugPrint(response.body);
-    data = json.decode(response.body);
-    //debugPrint("${data[0]}");
-    //setState(() {
+        'https://sigapdev2-consultarecibos-back.herokuapp.com/alumnoprograma/buscard/08884699');
+    setState(() {
+      data = json.decode(response.body);
       usersData = data;
-    //});
+    });
   }
 
   @override
@@ -44,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DETALLE DE PAGOS'),
+        title: Text('Programas Cursados'),
         backgroundColor: Colors.indigo[900],
       ),
       body: ListView.builder(
@@ -58,7 +49,7 @@ class _DetailPageState extends State<DetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      "${usersData[index]['idRec']}",
+                      "${usersData[index]['idPrograma']}",
                       style: TextStyle(
                           fontSize: 10.0, fontWeight: FontWeight.w500),
                     ),
@@ -66,7 +57,7 @@ class _DetailPageState extends State<DetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "${usersData[index]['fecha']}",
+                      "${usersData[index]['nom_programa']}",
                       style: TextStyle(
                           fontSize: 10.0, fontWeight: FontWeight.w700),
                     ),
@@ -74,27 +65,30 @@ class _DetailPageState extends State<DetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "${usersData[index]['moneda2']}",
+                      "${usersData[index]['siglaProg']}",
                       style: TextStyle(
                           fontSize: 10.0, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      "${usersData[index]['moneda']}",
-                      style: TextStyle(
-                          fontSize: 10.0, fontWeight: FontWeight.w700),
+                    padding: const EdgeInsets.all(5),
+                    child: RaisedButton(
+                      elevation: 2.0,
+                      color: Colors.indigo[900],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      onPressed: null,
+                      child: Text(
+                        "Ver Más",
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.5,
+                          fontSize: MediaQuery.of(context).size.height / 40,
+                        ),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      "${usersData[index]['validado']}",
-                      style: TextStyle(
-                          fontSize: 10.0, fontWeight: FontWeight.w700),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -104,7 +98,6 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 }
-
 
 //ListView.builder(
 //  itemCount: usersData == null ? 0 : usersData.length,
@@ -154,7 +147,7 @@ class _DetailPageState extends State<DetailPage> {
 //                fontSize: 10.0,
 //                fontWeight: FontWeight.w700
 //              ),),
-//            )   
+//            )
 //          ],
 //        ),
 //      ),
