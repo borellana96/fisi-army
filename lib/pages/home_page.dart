@@ -1,6 +1,7 @@
 import 'package:fisi_army/pages/detailPayment_page.dart';
 import 'package:fisi_army/pages/tabs/ajustes.dart';
 import 'package:fisi_army/pages/tabs/perfil.dart';
+import 'package:fisi_army/pages/tabs/programas.dart';
 import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage>
   TabBarView getTabBarView() {
     return TabBarView(
       controller: _controller,
-      children: <Widget>[PerfilWidget(usuario: widget.usuario), DetailPage(), AjustesWidget()],
+      children: <Widget>[PerfilWidget(usuario: widget.usuario), DetailPage(dni:widget.usuario['dniM']), AjustesWidget()],
     );
   }
 }

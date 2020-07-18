@@ -322,8 +322,8 @@ class _LoginPageState extends State<LoginPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Restablecimeinto de cotnraseña"),
-      content: Text("Su usuario y password es su dni"),
+      title: Text("Restablecimeinto de Contraseña"),
+      content: Text("Su usuario y contraseña es su dni"),
       actions: [
         okButton,
       ],
@@ -483,7 +483,7 @@ class _LoginPageState extends State<LoginPage> {
                           "/" +
                           recuperarUsuario;
                   url = url.trim();
-                  debugPrint("recupoerar link: " + url);
+                  debugPrint("recuperar link: " + url);
                   var response = await http.get(url);
                   if (response.statusCode == 200) {
                     debugPrint("recupero ok");

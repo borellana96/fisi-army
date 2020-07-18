@@ -8,6 +8,7 @@ class PerfilUsuario extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    final secondary = Color(0xfff29a94);
     String email;
     if(usuario['mail']==null)
       email = "SIN CORREO ELECTRONICO";
@@ -27,29 +28,14 @@ class PerfilUsuario extends StatelessWidget {
         body: ListView(
           padding: const EdgeInsets.all(8),
           children: <Widget>[
-              ListTile(
-                title: Text("Usuario",
-                style: TextStyle(
-                   fontWeight: FontWeight.w500)
-                ),
-                subtitle: Text(usuario['userName']),
-                leading: Icon(Icons.vpn_key),
-              ),
-              ListTile(
-                title: Text("Codigo Usuario",
-                style: TextStyle(
-                   fontWeight: FontWeight.w500)
-                ),
-                subtitle: Text(usuario['codAlumno']),
-                leading: Icon(Icons.filter_center_focus),
-              ),
+              
               ListTile(
                 title: Text("Nombre Completo",
                 style: TextStyle(
                    fontWeight: FontWeight.w500)
                 ),
                 subtitle: Text(usuario['nomAlumno']+" "+usuario['apePaterno']),
-                leading: Icon(Icons.person),
+                leading: Icon(Icons.person,color: secondary),
               ),
               ListTile(
                 title: Text("Correo",
@@ -57,7 +43,7 @@ class PerfilUsuario extends StatelessWidget {
                    fontWeight: FontWeight.w500)
                 ),
                 subtitle: Text(email),
-                leading: Icon(Icons.email),
+                leading: Icon(Icons.email,color: secondary),
               ),
               ListTile(
                 title: Text("DNI",
@@ -65,7 +51,7 @@ class PerfilUsuario extends StatelessWidget {
                    fontWeight: FontWeight.w500)
                 ),
                 subtitle: Text(usuario['dniM']),
-                leading: Icon(Icons.chrome_reader_mode),
+                leading: Icon(Icons.chrome_reader_mode,color: secondary),
               )
           ],
         ),
