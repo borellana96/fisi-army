@@ -5,10 +5,10 @@ import 'package:fisi_army/pages/tabs/programas.dart';
 import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fisi_army/pages/login_page.dart';
 
 class HomePage extends StatefulWidget {
-
-  final  Map<String, dynamic>  usuario;
+  final Map<String, dynamic> usuario;
 
   const HomePage({Key key, this.usuario}) : super(key: key);
 
@@ -50,7 +50,12 @@ class _HomePageState extends State<HomePage>
           actions: <Widget>[
             InkWell(
                 onTap: () {
-                  Provider.of<LoginState>(context).logout();
+                  try {
+                    //Provider.of<LoginState>(context).logout();
+                  } catch (e) {}
+
+                  debugPrint("click logout");
+                  showAlertDialog(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -119,12 +124,8 @@ class _HomePageState extends State<HomePage>
           ),
         ),
         Container(
-          child: Text("HOLA "+ widget.usuario['nomAlumno'],
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20.0
-            )
-          ),
+          child: Text("HOLA " + widget.usuario['nomAlumno'],
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
           height: 40,
         )
       ],
@@ -147,7 +148,53 @@ class _HomePageState extends State<HomePage>
   TabBarView getTabBarView() {
     return TabBarView(
       controller: _controller,
-      children: <Widget>[PerfilWidget(usuario: widget.usuario), DetailPage(dni:widget.usuario['dniM']), AjustesWidget()],
+      children: <Widget>[
+        PerfilWidget(usuario: widget.usuario),
+        DetailPage(dni: widget.usuario['dniM']),
+        AjustesWidget()
+      ],
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "Seguir aqui",
+        style: TextStyle(fontSize: 15.0),
+      ),
+      onPressed: () => Navigator.pop(context),
+      color: Colors.indigo,
+    );
+    Widget okButton = FlatButton(
+      child: Text(
+        "Cerrar Sesion",
+        style: TextStyle(fontSize: 15.0),
+      ),
+      onPressed: () => {
+        Navigator.pop(context),
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        )
+      },
+      color: Colors.redAccent,
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Cerrar Sesion"),
+      content: Text("Esta Seguro que desea cerrar sesion?"),
+      actions: [okButton, cancelButton],
+      elevation: 24.0,
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
