@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'detailPay_page.dart';
+
 class DetailPage extends StatefulWidget {
   final String dni;
 
@@ -147,7 +149,13 @@ class _DetailPageState extends State<DetailPage> {
             
             child:RawMaterialButton(
             
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailPayPage(codigoAlumno: usersData[index]['codAlumno'])),
+              );
+            },
             elevation: 2.0,
             fillColor: Colors.white,
             child: Icon(
