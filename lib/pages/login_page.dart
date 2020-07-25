@@ -159,7 +159,8 @@ class _LoginPageState extends State<LoginPage> {
                 print(usuario['userName']);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage(usuario: usuario)),
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(usuario: usuario)),
                 );
               } else {
                 showAlertDialog(context);
@@ -319,17 +320,15 @@ class _LoginPageState extends State<LoginPage> {
       },
       color: Colors.green,
     );
-
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Restablecimeinto de Contraseña"),
+      title: Text("Restablecimiento de Contraseña"),
       content: Text("Su usuario y contraseña es su dni"),
       actions: [
         okButton,
       ],
       elevation: 24.0,
     );
-
     // show the dialog
     showDialog(
       context: context,
@@ -353,7 +352,8 @@ class _LoginPageState extends State<LoginPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Error"),
-      content: Text("No se pudo restrablecer. Verifique que escribio bien"),
+      content:
+          Text("No se pudo restablecer. Verifique que escribio bien los datos"),
       actions: [
         okButton,
       ],
@@ -439,7 +439,6 @@ class _LoginPageState extends State<LoginPage> {
 
   createAlertRecuperarContrasenia(BuildContext context) {
     var recuperarUsuario, recuperarEmail;
-
     return showDialog(
         context: context,
         builder: (context) {
