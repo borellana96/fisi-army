@@ -58,7 +58,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                   children: <Widget>[
 
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Text(
                         "${usersData[index]['concepto']}",
                         style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
@@ -79,7 +79,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                       )
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Text(
                         "${usersData[index]['moneda2']}",
                         style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
@@ -89,12 +89,21 @@ class _DetailPayPageState extends State<DetailPayPage> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
                         "${usersData[index]['moneda']}",
-                        style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
+                        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500)
                       )
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Icon(Icons.check, color: Colors.green,)
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: Text(
+                          "CANCELADO",
+                          style: TextStyle(fontSize: 9.0, fontWeight: FontWeight.w500,color: Colors.white,backgroundColor: Colors.green)
+                        )
+                      ),
                     )
                   ]
                 )
@@ -108,7 +117,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                   children: <Widget>[
 
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Text(
                         "${usersData[index]['concepto']}",
                         style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
@@ -129,7 +138,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                       )
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Text(
                         "${usersData[index]['moneda2']}",
                         style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
@@ -139,12 +148,22 @@ class _DetailPayPageState extends State<DetailPayPage> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
                         "${usersData[index]['moneda']}",
-                        style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
+                        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+                        
                       )
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Icon(Icons.close, color: Colors.red)
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: Text(
+                          "NO CANCELADO",
+                          style: TextStyle(fontSize: 9.0, fontWeight: FontWeight.w500,color: Colors.white,backgroundColor: Colors.red)
+                        )
+                      ),
                     )
                   ]
                 )
