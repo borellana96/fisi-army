@@ -265,8 +265,8 @@ class _LoginPageState extends State<LoginPage> {
                 _buildForgetPasswordButton(),
                 _buildChangePasswordButton(),
                 //SizedBox(height: 30),
-                _buildOrRow(),
-                _buildSocialBtnRow(),
+                //_buildOrRow(),
+                //_buildSocialBtnRow(),
               ],
             ),
           ),
@@ -312,12 +312,7 @@ class _LoginPageState extends State<LoginPage> {
         "Aceptar",
         style: TextStyle(fontSize: 15.0),
       ),
-      onPressed: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        )
-      },
+      onPressed: () => Navigator.pop(context),
       color: Colors.green,
     );
     // set up the AlertDialog

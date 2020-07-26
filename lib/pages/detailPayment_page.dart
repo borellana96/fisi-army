@@ -60,7 +60,7 @@ class _DetailPageState extends State<DetailPage> {
         color: Colors.white,
       ),
       width: double.infinity,
-      height: 140,
+      height: 150,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Row(

@@ -56,7 +56,6 @@ class _DetailPayPageState extends State<DetailPayPage> {
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
                   children: <Widget>[
-
                     Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: Text(
@@ -65,7 +64,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                       )
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Text(
                         "${usersData[index]['idRec']}",
                         style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
@@ -88,7 +87,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
-                        "${usersData[index]['moneda']}",
+                        "${usersData[index]['importe']}",
                         style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500)
                       )
                     ),
@@ -124,7 +123,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                       )
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Text(
                         "${usersData[index]['idRec']}",
                         style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w500)
@@ -147,7 +146,7 @@ class _DetailPayPageState extends State<DetailPayPage> {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
-                        "${usersData[index]['moneda']}",
+                        "${usersData[index]['importe']}",
                         style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
                         
                       )
