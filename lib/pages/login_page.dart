@@ -1,4 +1,3 @@
-import 'package:fisi_army/main.dart';
 import 'package:fisi_army/states/login_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'package:fisi_army/pages/home_page.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:fisi_army/states/login_state.dart';
 
 const mainColor = Color(0xff2470c7);
 

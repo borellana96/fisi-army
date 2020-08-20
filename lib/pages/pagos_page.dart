@@ -1,19 +1,18 @@
-import 'package:fisi_army/pages/tabs/programas.dart';
-import 'package:fisi_army/pages/tabs/ajustes.dart';
-import 'package:fisi_army/pages/tabs/perfil.dart';
+import 'package:fisi_army/pages/tabs/epg.dart';
+import 'package:fisi_army/pages/tabs/upg.dart';
 import 'package:flutter/material.dart';
 import 'package:fisi_army/pages/login_page.dart';
 
-class HomePage extends StatefulWidget {
-  final Map<String, dynamic> usuario;
-
-  const HomePage({Key key, this.usuario}) : super(key: key);
+class PagosPage extends StatefulWidget {
+  final String codigoAlumno;
+  
+  const PagosPage({Key key, this.codigoAlumno}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _PagosPageState createState() => _PagosPageState();
 }
 
-class _HomePageState extends State<HomePage>
+class _PagosPageState extends State<PagosPage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   ScrollController _scrollViewController;
@@ -21,8 +20,8 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    ProgramasWidget();
-    _controller = TabController(length: 3, vsync: this);
+    EpgWidget();
+    _controller = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -34,36 +33,18 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.usuario);
+    print(widget.codigoAlumno);
     return MaterialApp(
       title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            'assets/logounmsm.png',
-            height: 45.0,
-          ),
-          actions: <Widget>[
-            InkWell(
-                onTap: () {
-                  try {
-                    //Provider.of<LoginState>(context).logout();
-                  } catch (e) {}
-
-                  debugPrint("click logout");
-                  showAlertDialog(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Icon(Icons.exit_to_app),
-                ))
-          ],
+          title: Text("PAGOS DEL PROGRAMA",style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.indigo[900],
         ),
         body: Column(
           children: <Widget>[
-            welcome(),
+            descuento(),
             Container(
               padding: EdgeInsets.all(15),
               child: getTabBar(),
@@ -77,21 +58,11 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget welcome() {
+  Widget descuento() {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(120.0),
-            child: Image.asset(
-              'assets/usuario.png',
-              height: 100,
-            ),
-          ),
-        ),
         Container(
-          child: Text("HOLA " + widget.usuario['nomAlumno'],
+          child: Text("Descuento: ",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
           height: 40,
         )
@@ -102,9 +73,8 @@ class _HomePageState extends State<HomePage>
   TabBar getTabBar() {
     return TabBar(
       tabs: <Tab>[
-        Tab(icon: Icon(Icons.person_pin)),
-        Tab(icon: Icon(Icons.payment)),
-        Tab(icon: Icon(Icons.settings)),
+        Tab(text: "UPG",),
+        Tab(text: "EPG")
       ],
       controller: _controller,
       labelColor: Colors.black,
@@ -115,11 +85,7 @@ class _HomePageState extends State<HomePage>
   TabBarView getTabBarView() {
     return TabBarView(
       controller: _controller,
-      children: <Widget>[
-        PerfilWidget(usuario: widget.usuario),
-        ProgramasWidget(dni: widget.usuario['dniM']),
-        AjustesWidget()
-      ],
+      children: <Widget>[UpgWidget(), EpgWidget(codigoAlumno: widget.codigoAlumno)],
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:fisi_army/pages/detailPayment_page.dart';
+import 'package:fisi_army/pages/tabs/programas.dart';
 import 'package:fisi_army/pages/home_page.dart';
 import 'package:fisi_army/pages/login_page.dart';
 import 'package:fisi_army/states/login_state.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             }
           },
-          '/add': (BuildContext context) => DetailPage(),
+          '/add': (BuildContext context) => ProgramasWidget(),
           '/login': (BuildContext context) => LoginPage()
         },
       ),

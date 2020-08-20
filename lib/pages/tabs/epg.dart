@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class DetailPayPage extends StatefulWidget {
+class EpgWidget extends StatefulWidget {
   final String codigoAlumno;
 
-  const DetailPayPage({Key key, this.codigoAlumno}) : super(key: key);
+  const EpgWidget({Key key, this.codigoAlumno}) : super(key: key);
   @override
-  _DetailPayPageState createState() => _DetailPayPageState();
+  _EpgWidgetState createState() => _EpgWidgetState();
 }
 
-class _DetailPayPageState extends State<DetailPayPage> {
+class _EpgWidgetState extends State<EpgWidget> {
   String icono;
   String color;
   List data;
