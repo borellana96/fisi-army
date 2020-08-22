@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.usuario);
     return MaterialApp(
       title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
@@ -50,7 +49,6 @@ class _HomePageState extends State<HomePage>
                   try {
                     //Provider.of<LoginState>(context).logout();
                   } catch (e) {}
-
                   debugPrint("click logout");
                   showAlertDialog(context);
                 },

@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             createAlertRecuperarContrasenia(context);
           },
           child: Text(
-            "Olvide mi contraseña",
+            "Olvidé mi contraseña",
             style: TextStyle(
               decoration: TextDecoration.underline,
             ),
@@ -141,20 +141,16 @@ class _LoginPageState extends State<LoginPage> {
                       "/" +
                       email;
               url = url.trim();
-              debugPrint(url);
 
               var response = await http.get(url);
               if (response.statusCode == 200) {
-                debugPrint("Existe");
                 var state = Provider.of<LoginState>(context);
-
                 state.username = email;
                 state.password = password;
                 state.setLoggedIn(true);
                 state.perfil = json.decode(response.body);
                 print(response.body);
                 Map<String, dynamic> usuario = json.decode(response.body);
-                print(usuario['userName']);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -286,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("¿Error de Inicar Sesiòn?"),
+      title: Text("¿Error de Inicar Sesión?"),
       content: Text("Usuario o Contraseña Incorrecta"),
       actions: [
         okButton,

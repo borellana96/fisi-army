@@ -68,7 +68,6 @@ class _ProgramasWidgetState extends State<ProgramasWidget> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                //builder: (context) => DetailPayPage(codigoAlumno: usersData[index]['codAlumno'])),
                 builder: (context) => PagosPage(codigoAlumno: usersData[index]['codAlumno'])),
           );
         },

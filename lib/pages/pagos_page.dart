@@ -2,10 +2,12 @@ import 'package:fisi_army/pages/tabs/epg.dart';
 import 'package:fisi_army/pages/tabs/upg.dart';
 import 'package:flutter/material.dart';
 import 'package:fisi_army/pages/login_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PagosPage extends StatefulWidget {
   final String codigoAlumno;
-  
+
   const PagosPage({Key key, this.codigoAlumno}) : super(key: key);
 
   @override
@@ -16,10 +18,27 @@ class _PagosPageState extends State<PagosPage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   ScrollController _scrollViewController;
+  List beneficios;
+  Map<String, dynamic> beneficio;
+
+  getDescuento() async {
+    var response = await http.get(
+        'https://sigapdev2-consultarecibos-back.herokuapp.com/beneficio/listar/' +
+            widget.codigoAlumno);
+
+    setState(() {
+      beneficios = json.decode(response.body);
+      beneficio = beneficios[0];
+      debugPrint(response.body);
+      debugPrint(beneficios[0]['cod_alumno']);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    getDescuento();
+    UpgWidget();
     EpgWidget();
     _controller = TabController(length: 2, vsync: this);
   }
@@ -33,17 +52,25 @@ class _PagosPageState extends State<PagosPage>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.codigoAlumno);
+    var descuentoTxt = Align(
+        alignment: Alignment.bottomLeft,
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Text("Descuento: ",
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+        ));
+
     return MaterialApp(
       title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text("PAGOS DEL PROGRAMA",style: TextStyle(fontSize: 18)),
+          title: Text("PAGOS DEL PROGRAMA", style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.indigo[900],
         ),
         body: Column(
           children: <Widget>[
+            descuentoTxt,
             descuento(),
             Container(
               padding: EdgeInsets.all(15),
@@ -59,23 +86,74 @@ class _PagosPageState extends State<PagosPage>
   }
 
   Widget descuento() {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Text("Descuento: ",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-          height: 40,
-        )
-      ],
+    return Card(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Column(children: [
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text("BENEFICIO",
+                    style:
+                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
+              )
+            ]),
+            Row(children: [
+              Text("${beneficios[0]['benef_otrogado']}%",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
+            ])
+          ]),
+          Column(children: [
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text("AUTORIZACIÓN",
+                    style:
+                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
+              )
+            ]),
+            Row(children: [
+              Text("${beneficios[0]['autorizacion']}",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
+            ])
+          ]),
+          Column(children: [
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text("CONDICIÓN",
+                    style:
+                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
+              )
+            ]),
+            Row(children: [
+              Text("${beneficios[0]['condicion']}",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
+            ])
+          ]),
+          Column(children: [
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text("FECHA",
+                    style:
+                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
+              )
+            ]),
+            Row(children: [
+              Text("${beneficios[0]['fecha']}",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
+            ])
+          ]),
+        ],
+      ),
     );
   }
 
   TabBar getTabBar() {
     return TabBar(
-      tabs: <Tab>[
-        Tab(text: "UPG",),
-        Tab(text: "EPG")
-      ],
+      tabs: <Tab>[Tab(text: "EPG"), Tab(text: "UPG")],
       controller: _controller,
       labelColor: Colors.black,
       unselectedLabelColor: Colors.black54,
@@ -85,7 +163,10 @@ class _PagosPageState extends State<PagosPage>
   TabBarView getTabBarView() {
     return TabBarView(
       controller: _controller,
-      children: <Widget>[UpgWidget(), EpgWidget(codigoAlumno: widget.codigoAlumno)],
+      children: <Widget>[
+        EpgWidget(codigoAlumno: widget.codigoAlumno),
+        UpgWidget(codigoAlumno: widget.codigoAlumno)
+      ],
     );
   }
 
