@@ -18,8 +18,8 @@ class _PagosPageState extends State<PagosPage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   ScrollController _scrollViewController;
-  List beneficios;
-  Map<String, dynamic> beneficio;
+  List data;
+  List beneficio;
 
   getDescuento() async {
     var response = await http.get(
@@ -27,10 +27,15 @@ class _PagosPageState extends State<PagosPage>
             widget.codigoAlumno);
 
     setState(() {
-      beneficios = json.decode(response.body);
-      beneficio = beneficios[0];
-      debugPrint(response.body);
-      debugPrint(beneficios[0]['cod_alumno']);
+      data = json.decode(response.body);
+      beneficio =  data;
+      debugPrint(widget.codigoAlumno);
+      //if(beneficios){
+      //  beneficio = beneficios[0];
+      //  debugPrint(response.body);
+      //  debugPrint(beneficios[0]['cod_alumno']);
+      //}
+      
     });
   }
 
@@ -71,7 +76,25 @@ class _PagosPageState extends State<PagosPage>
         body: Column(
           children: <Widget>[
             descuentoTxt,
-            descuento(),
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: beneficio == null ? 0 : beneficio.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (beneficio.length!=0) {
+                  return descuento(beneficio[index]['benef_otrogado'],beneficio[index]['autorizacion'],beneficio[index]['condicion'],beneficio[index]['fecha']);
+                }else{
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text("0 Descuentos",
+                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+                    )
+                  );
+                }
+             },
+            ),
             Container(
               padding: EdgeInsets.all(15),
               child: getTabBar(),
@@ -85,72 +108,61 @@ class _PagosPageState extends State<PagosPage>
     );
   }
 
-  Widget descuento() {
+  Widget descuento(benef_otrogado, autorizacion, condicion,fecha) {
     return Card(
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Column(children: [
-            Row(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              dato("BENEFICIO", "${benef_otrogado}%")
+            ]
+          ),
+          SizedBox(height: 20),
+          Row(
+            children:<Widget> [
               Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Text("BENEFICIO",
-                    style:
-                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
-              )
-            ]),
-            Row(children: [
-              Text("${beneficios[0]['benef_otrogado']}%",
-                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
-            ])
-          ]),
-          Column(children: [
-            Row(children: [
+              padding: const EdgeInsets.all(7.0),
+              child: dato("AUTORIZACIÓN", "${autorizacion}"),
+              ),
               Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Text("AUTORIZACIÓN",
-                    style:
-                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
-              )
-            ]),
-            Row(children: [
-              Text("${beneficios[0]['autorizacion']}",
-                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
-            ])
-          ]),
-          Column(children: [
-            Row(children: [
+              padding: const EdgeInsets.all(7.0),
+              child:
+              dato("CONDICIÓN", "${condicion}"),
+              ),
               Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Text("CONDICIÓN",
-                    style:
-                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
+              padding: const EdgeInsets.all(7.0),
+              child:
+              dato("FECHA", "${fecha}"),
               )
-            ]),
-            Row(children: [
-              Text("${beneficios[0]['condicion']}",
-                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
-            ])
-          ]),
-          Column(children: [
-            Row(children: [
-              Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Text("FECHA",
-                    style:
-                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
-              )
-            ]),
-            Row(children: [
-              Text("${beneficios[0]['fecha']}",
-                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
-            ])
-          ]),
+            ]
+          )
         ],
       ),
     );
   }
-
+  Widget dato(String nombre,String valor){
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(7.0),
+              child: Text("${nombre}",
+                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500)),
+            )
+          ]
+        ),
+        Row(
+          children: <Widget>[
+            Text("${valor}",
+              style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500))
+          ]
+        )
+      ]
+    );
+  }
   TabBar getTabBar() {
     return TabBar(
       tabs: <Tab>[Tab(text: "EPG"), Tab(text: "UPG")],
